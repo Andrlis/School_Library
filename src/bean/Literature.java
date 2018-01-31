@@ -6,6 +6,7 @@ public class Literature {
     private String type;
     private String name;
     private String author;
+    private boolean available;
 
     public int getId() {
         return id;
@@ -37,5 +38,13 @@ public class Literature {
 
     public void setAuthor(String author) {
         this.author = author;
+    }
+
+    public boolean isAvailable() {
+        return available;
+    }
+
+    public void setAvailable(boolean available) {
+        this.available = available;
     }
 }
