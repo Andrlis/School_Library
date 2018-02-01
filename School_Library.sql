@@ -18,7 +18,7 @@ id_item INTEGER AUTO_INCREMENT,
 item_type VARCHAR(10) NOT NULL,
 item_name VARCHAR(20) NOT NULL,
 author VARCHAR(20) NOT NULL,
-available BOOLEAN NOT NULL,
+numOfAvailable INTEGER NOT NULL,
 PRIMARY KEY(id_item)
 );
 

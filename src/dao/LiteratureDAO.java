@@ -11,14 +11,14 @@ import java.util.List;
 
 public class LiteratureDAO extends AbstractDAO {
 
-    private final static String GET_BY_ID_QUERY =
-            "SELECT * FROM school_library.literature WHERE id_item = ?";
+    private final static String GET_AVAILABLE_QUERY =
+            "SELECT * FROM school_library.literature WHERE numOfAvailable > 0";
     private final static String GET_ALL_QUERY =
             "SELECT * FROM school_library.literature";
     private final static String SAVE_QUERY =
-            "INSERT INTO school_library.literature (item_type, item_name, author, available) VALUES (?, ?, ?, ?)";
+            "INSERT INTO school_library.literature (item_type, item_name, author, numOfAvailable) VALUES (?, ?, ?, ?)";
     private final static String UPDATE_QUERY =
-            "UPDATE school_library.literature SET item_type = ?, item_name = ?, author = ?, available = ? WHERE id_item = ?";
+            "UPDATE school_library.literature SET item_type = ?, item_name = ?, author = ?, numOfAvailable = ? WHERE id_item = ?";
     private final static String REMOVE_QUERY =
             "DELETE FROM school_library.literature WHERE id_item = ?";
 
@@ -30,8 +30,7 @@ public class LiteratureDAO extends AbstractDAO {
 
         try {
             connection = getConnection();
-            statement = connection.prepareStatement(GET_BY_ID_QUERY);
-            statement.setInt(1, id);
+            statement = connection.prepareStatement(GET_AVAILABLE_QUERY);
             resultSet = statement.executeQuery();
 
             if (resultSet.next()) {
@@ -41,7 +40,7 @@ public class LiteratureDAO extends AbstractDAO {
                 item.setType(resultSet.getString("item_type"));
                 item.setName(resultSet.getString("item_name"));
                 item.setAuthor(resultSet.getString("author"));
-                item.setAvailable(resultSet.getBoolean("available"));
+                item.setNumOfAvailable(resultSet.getInt("numOfAvailable"));
 
             }
         } catch (SQLException e) {
@@ -70,7 +69,7 @@ public class LiteratureDAO extends AbstractDAO {
                 item.setType(resultSet.getString("item_type"));
                 item.setName(resultSet.getString("item_name"));
                 item.setAuthor(resultSet.getString("author"));
-                item.setAvailable(resultSet.getBoolean("available"));
+                item.setNumOfAvailable(resultSet.getInt("numOfAvailable"));
 
                 literature.add(item);
             }
@@ -95,7 +94,7 @@ public class LiteratureDAO extends AbstractDAO {
             statement.setString(1, item.getType());
             statement.setString(2, item.getName());
             statement.setString(3, item.getAuthor());
-            statement.setBoolean(4, item.isAvailable());
+            statement.setInt(4, item.getNumOfAvailable());
 
             statement.executeUpdate();
         }catch (SQLException e) {

@@ -6,7 +6,7 @@ public class Literature {
     private String type;
     private String name;
     private String author;
-    private boolean available;
+    private int numOfAvailable;
 
     public int getId() {
         return id;
@@ -40,11 +40,15 @@ public class Literature {
         this.author = author;
     }
 
-    public boolean isAvailable() {
-        return available;
+    public int getNumOfAvailable() {
+        return numOfAvailable;
     }
 
-    public void setAvailable(boolean available) {
-        this.available = available;
+    public void setNumOfAvailable(int numOfAvailable) {
+        this.numOfAvailable = numOfAvailable;
+    }
+
+    public boolean isAvailable(){
+        return numOfAvailable > 0;
     }
 }
