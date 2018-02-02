@@ -76,7 +76,7 @@ public class SchoolLibrary {
     /*
         Add new literature.
     */
-    private void addLiterature() throws DaoException{
+    private void addLiterature() throws Exception{
         System.out.println("Input information about literature. (Format: Type/Name/Author/Amount");
         Scanner scanner = new Scanner(System.in);
         String[] litInfo = scanner.nextLine().split("/");
@@ -96,8 +96,7 @@ public class SchoolLibrary {
      */
     private void showLiterature() throws DaoException{
         LiteratureDAO litDAO = new LiteratureDAO();
-        ArrayList<Literature> literature = new ArrayList<>(litDAO.getLiterature(
-                LiteratureDAO.GET_AVAILABLE_QUERY));
+        ArrayList<Literature> literature = new ArrayList<>(litDAO.getLiterature(LiteratureDAO.GET_AVAILABLE_QUERY));
         for(Literature item: literature){
             System.out.format("%-20s %-50s %-20s %n", item.getType(), item.getName(), item.getAuthor());
         }
@@ -226,7 +225,6 @@ public class SchoolLibrary {
                 Scanner scan = new Scanner(System.in);
                 analyzeInput(scan.nextLine());
             }catch (Exception exc){
-                System.out.println("exception");
                 exc.printStackTrace();
             }
         }

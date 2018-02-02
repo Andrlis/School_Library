@@ -16,7 +16,7 @@ public class StudentDAO extends AbstractDAO {
     public final static String GET_FIRST_LIST =
             "SELECT * FROM school_library.students WHERE number_of_books > 1 AND number_of_books <= 5 ORDER BY number_of_books";
     public final static String GET_SECOND_LIST =
-            "SELECT * FROM school_library.students WHERE number_of_books >= 3 AND number_of_books <= 6 ORDER BY date_of_birth DESC, number_of_books DESC";
+            "SELECT * FROM school_library.students WHERE number_of_books >= 3 AND number_of_books <= 6 ORDER BY date_of_birth, number_of_books DESC";
     private final static String SAVE_QUERY =
             "INSERT INTO school_library.students (student_name, date_of_birth, number_of_books) VALUES (?, ?, ?)";
     private final static String UPDATE_QUERY =
