@@ -23,35 +23,36 @@ public class SchoolLibrary {
         Analyze user input.
      */
     private void analyzeInput(String input) throws Exception{
-        if(input.equals("/addStud")){
-            addStudent();
-        }
-        else if(input.equals("/addLit")){
-            addLiterature();
-        }
-        else if(input.equals("/setLit")){
-            setLiterature();
-        }
-        else if(input.equals("/retLit")){
-            returnLiterature();
-        }
-        else if(input.equals("/showLit")){
-            showLiterature();
-        }
-        else if(input.equals("/showStud1")){
-            showReport1();
-        }
-        else if(input.equals("/showStud2")){
-            showReport2();
-        }
-        else if(input.equals("/q")){
-           cancel = true;
-        }
-        else if(input.equals("/h")){
-            Menu.printHelp();
-        }
-        else{
-            System.out.println("Input \'/h\' to see available options.");
+        switch (input){
+            case "/addStud":
+                addStudent();
+                break;
+            case "/addLit":
+                addLiterature();
+                break;
+            case "/setLit":
+                setLiterature();
+                break;
+            case "/retLit":
+                returnLiterature();
+                break;
+            case "/showLit":
+                showLiterature();
+                break;
+            case "/showStud1":
+                showReport1();
+                break;
+            case "/showStud2":
+                showReport2();
+                break;
+            case "/q":
+                cancel = true;
+                break;
+            case "/h":
+                Menu.printHelp();
+                break;
+            default:
+                System.out.println("Input \'/h\' to see available options.");
         }
     }
 
@@ -113,7 +114,7 @@ public class SchoolLibrary {
 
         System.out.println("Select student:");
 
-        ArrayList<Student> students = new ArrayList<>(studDao.getStudents(studDao.GET_ALL_QUERY));
+        ArrayList<Student> students = new ArrayList<>(studDao.getStudents(StudentDAO.GET_ALL_QUERY));
         for(int i = 0; i < students.size(); i++){
             System.out.format("%d. %s %n", i+1, students.get(i).getName());
         }
@@ -160,7 +161,7 @@ public class SchoolLibrary {
 
         System.out.println("Select student:");
 
-        ArrayList<Student> students = new ArrayList<>(studDao.getStudents(studDao.GET_ALL_QUERY));
+        ArrayList<Student> students = new ArrayList<>(studDao.getStudents(StudentDAO.GET_ALL_QUERY));
         for(int i = 0; i < students.size(); i++){
             System.out.format("%d. %s %n", i+1, students.get(i).getName());
         }
