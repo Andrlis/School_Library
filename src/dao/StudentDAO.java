@@ -3,6 +3,7 @@ package dao;
 import bean.Student;
 
 import java.sql.*;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -10,8 +11,12 @@ public class StudentDAO extends AbstractDAO {
 
     private final static String GET_BY_ID_QUERY =
             "SELECT * FROM school_library.students WHERE id_student = ?";
-    private final static String GET_ALL_QUERY =
+    public final static String GET_ALL_QUERY =
             "SELECT * FROM school_library.students";
+    public final static String GET_FIRST_LIST =
+            "SELECT * FROM school_library.students WHERE number_of_books > 1 AND number_of_books <= 5 ORDER BY number_of_books";
+    public final static String GET_SECOND_LIST =
+            "SELECT * FROM school_library.students WHERE number_of_books >= 3 AND number_of_books <= 6 ORDER BY date_of_birth DESC, number_of_books DESC";
     private final static String SAVE_QUERY =
             "INSERT INTO school_library.students (student_name, date_of_birth, number_of_books) VALUES (?, ?, ?)";
     private final static String UPDATE_QUERY =
@@ -49,7 +54,7 @@ public class StudentDAO extends AbstractDAO {
         return student;
     }
 
-    public List<Student> getAllStudents() throws DaoException{
+    public List<Student> getStudents(String query) throws DaoException{
         Connection connection = null;
         PreparedStatement statement = null;
         ResultSet resultSet = null;
@@ -57,7 +62,7 @@ public class StudentDAO extends AbstractDAO {
 
         try {
             connection = getConnection();
-            statement = connection.prepareStatement(GET_ALL_QUERY);
+            statement = connection.prepareStatement(query);
             resultSet = statement.executeQuery();
 
             while(resultSet.next()) {
@@ -89,7 +94,9 @@ public class StudentDAO extends AbstractDAO {
             statement = connection.prepareStatement(SAVE_QUERY);
 
             statement.setString(1, student.getName());
-            statement.setDate(2, (Date)student.getDateOfBirth());
+
+            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+            statement.setString(2, simpleDateFormat.format(student.getDateOfBirth()));
             statement.setInt(3, student.getNumberOfBooks());
 
             statement.executeUpdate();
@@ -110,8 +117,10 @@ public class StudentDAO extends AbstractDAO {
             statement = connection.prepareStatement(UPDATE_QUERY);
 
             statement.setString(1, student.getName());
-            statement.setDate(2, (Date)student.getDateOfBirth());
+            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+            statement.setString(2, simpleDateFormat.format(student.getDateOfBirth()));
             statement.setInt(3, student.getNumberOfBooks());
+            statement.setInt(4, id);
 
             statement.executeUpdate();
         }catch (SQLException e) {

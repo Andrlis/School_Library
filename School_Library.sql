@@ -16,7 +16,7 @@ PRIMARY KEY(id_student)
 CREATE TABLE literature(
 id_item INTEGER AUTO_INCREMENT,
 item_type VARCHAR(10) NOT NULL,
-item_name VARCHAR(20) NOT NULL,
+item_name VARCHAR(50) NOT NULL,
 author VARCHAR(20) NOT NULL,
 numOfAvailable INTEGER NOT NULL,
 PRIMARY KEY(id_item)

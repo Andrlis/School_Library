@@ -51,4 +51,13 @@ public class Literature {
     public boolean isAvailable(){
         return numOfAvailable > 0;
     }
+
+    public void incNumOfAvailable(){
+        numOfAvailable++;
+    }
+
+    public void decNumOfAvailable(){
+        if(numOfAvailable > 0)
+            numOfAvailable--;
+    }
 }

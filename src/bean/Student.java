@@ -40,4 +40,13 @@ public class Student {
     public void setNumberOfBooks(int numberOfBooks) {
         this.numberOfBooks = numberOfBooks;
     }
+
+    public void incNumberOfBooks(){
+        numberOfBooks++;
+    }
+
+    public void decNumberOfBooks(){
+        if(numberOfBooks > 0)
+            numberOfBooks--;
+    }
 }

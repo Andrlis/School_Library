@@ -11,9 +11,11 @@ import java.util.List;
 
 public class LiteratureDAO extends AbstractDAO {
 
-    private final static String GET_AVAILABLE_QUERY =
+    public final static String GET_AVAILABLE_QUERY =
             "SELECT * FROM school_library.literature WHERE numOfAvailable > 0";
-    private final static String GET_ALL_QUERY =
+    private final static String GET_BY_ID_QUERY =
+            "SELECT * FROM school_library.literature WHERE id_item = ?";
+    public final static String GET_ALL_QUERY =
             "SELECT * FROM school_library.literature";
     private final static String SAVE_QUERY =
             "INSERT INTO school_library.literature (item_type, item_name, author, numOfAvailable) VALUES (?, ?, ?, ?)";
@@ -22,7 +24,7 @@ public class LiteratureDAO extends AbstractDAO {
     private final static String REMOVE_QUERY =
             "DELETE FROM school_library.literature WHERE id_item = ?";
 
-    public Literature getLiteratureById(int id) throws DaoException{
+    public Literature getLiteratureByID(int id) throws DaoException{
         Connection connection = null;
         PreparedStatement statement = null;
         ResultSet resultSet = null;
@@ -30,7 +32,8 @@ public class LiteratureDAO extends AbstractDAO {
 
         try {
             connection = getConnection();
-            statement = connection.prepareStatement(GET_AVAILABLE_QUERY);
+            statement = connection.prepareStatement(GET_BY_ID_QUERY);
+            statement.setInt(1, id);
             resultSet = statement.executeQuery();
 
             if (resultSet.next()) {
@@ -51,7 +54,7 @@ public class LiteratureDAO extends AbstractDAO {
         return item;
     }
 
-    public List<Literature> getAllLiterature() throws DaoException{
+    public List<Literature> getLiterature(String query) throws DaoException{
         Connection connection = null;
         PreparedStatement statement = null;
         ResultSet resultSet = null;
@@ -59,7 +62,7 @@ public class LiteratureDAO extends AbstractDAO {
 
         try {
             connection = getConnection();
-            statement = connection.prepareStatement(GET_ALL_QUERY);
+            statement = connection.prepareStatement(query);
             resultSet = statement.executeQuery();
 
             while(resultSet.next()) {
@@ -116,7 +119,8 @@ public class LiteratureDAO extends AbstractDAO {
             statement.setString(1, item.getType());
             statement.setString(2, item.getName());
             statement.setString(3, item.getAuthor());
-            statement.setBoolean(4, item.isAvailable());
+            statement.setInt(4, item.getNumOfAvailable());
+            statement.setInt(5, id);
 
             statement.executeUpdate();
         }catch (SQLException e) {
